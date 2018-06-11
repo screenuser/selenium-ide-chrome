@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="pingback" href="./xmlrpc.php">
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic' rel='stylesheet' type='text/css'>
+	<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Selenium IDE in Chrome: how to run tests outside of Firefox</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v7.5.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Running Selenium IDE in Chrome is possible with WebDriver Playback. The feature lets you run recorded tests in a Chrome environment, which expands the functionality of Selenium IDE."/>
+<link rel="canonical" href="index.html" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Selenium IDE in Chrome: how to run tests outside of Firefox" />
+<meta property="og:description" content="Running Selenium IDE in Chrome is possible with WebDriver Playback. The feature lets you run recorded tests in a Chrome environment, which expands the functionality of Selenium IDE." />
+<meta property="og:url" content="./selenium-ide-chrome/" />
+<meta property="og:site_name" content="Screenster" />
+<meta property="article:publisher" content="https://www.facebook.com/screenster.io" />
+<meta property="article:section" content="UI Testing Automation" />
+<meta property="article:published_time" content="2017-03-02T14:25:04+00:00" />
+<meta property="article:modified_time" content="2018-05-21T10:31:25+00:00" />
+<meta property="og:updated_time" content="2018-05-21T10:31:25+00:00" />
+<meta property="og:image" content="./wp-content/uploads/2017/01/SeleniumIDEwithChrome.png" />
+<meta property="og:image:secure_url" content="./wp-content/uploads/2017/01/SeleniumIDEwithChrome.png" />
+<meta property="og:image:width" content="800" />
+<meta property="og:image:height" content="300" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="Running Selenium IDE in Chrome is possible with WebDriver Playback. The feature lets you run recorded tests in a Chrome environment, which expands the functionality of Selenium IDE." />
+<meta name="twitter:title" content="Selenium IDE in Chrome: how to run tests outside of Firefox" />
+<meta name="twitter:site" content="@screenster_io" />
+<meta name="twitter:image" content="./wp-content/uploads/2017/01/SeleniumIDEwithChrome.png" />
+<meta name="twitter:creator" content="@screenster_io" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel="amphtml" href="amp/index.html" /><link rel='dns-prefetch' href='https://js.hs-scripts.com/' />
+<link rel='dns-prefetch' href='https://s.w.org/' />
+<link rel="alternate" type="application/rss+xml" title="Screenster &raquo; Feed" href="./feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Screenster &raquo; Comments Feed" href="./comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Screenster &raquo; Selenium IDE for Chrome Comments Feed" href="feed/index.html" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/screenster.io\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='contact-form-7-css'  href='./wp-content/plugins/contact-form-7/includes/css/styles.css%3Fver=5.0.2.css' type='text/css' media='all' />
+<link rel='stylesheet' id='ez-icomoon-css'  href='./wp-content/plugins/easy-table-of-contents/vendor/icomoon/style.min.css%3Fver=1.7.css' type='text/css' media='all' />
+<link rel='stylesheet' id='ez-toc-css'  href='./wp-content/plugins/easy-table-of-contents/assets/css/screen.min.css%3Fver=1.7.css' type='text/css' media='all' />
+<style id='ez-toc-inline-css' type='text/css'>
+div#ez-toc-container p.ez-toc-title {font-size: 120%;}div#ez-toc-container p.ez-toc-title {font-weight: 500;}div#ez-toc-container ul li {font-size: 95%;}
+</style>
+<link rel='stylesheet' id='genericons-css'  href='./wp-content/themes/twentysixteen/genericons/genericons.css%3Fver=3.4.1.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-style-css'  href='./wp-content/themes/twentysixteen/style.css%3Fver=5.1.7.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wpgform-css-css'  href='./wp-content/plugins/wpgform/css/wpgform.css%3Fver=4.9.6.css' type='text/css' media='all' />
+<link rel='stylesheet' id='addtoany-css'  href='./wp-content/plugins/add-to-any/addtoany.min.css%3Fver=1.14.css' type='text/css' media='all' />
+<style id='addtoany-inline-css' type='text/css'>
+div.addtoany_share_save_container {
+opacity: 0.8;
+}
+</style>
+<script type='text/javascript' src='./wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
+<script type='text/javascript' src='./wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
+<script type='text/javascript' src='./wp-content/plugins/add-to-any/addtoany.min.js%3Fver=1.0'></script>
+<script type='text/javascript' src='./wp-content/plugins/wonderplugin-lightbox/engine/wonderpluginlightbox.js%3Fver=4.0'></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='./wp-content/themes/twentysixteen/js/html5.js?ver=3.7.3'></script>
+<![endif]-->
+<link rel='https://api.w.org/' href='./wp-json/index.html' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="./xmlrpc.php%3Frsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="./wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.9.6" />
+<link rel="alternate" type="application/json+oembed" href="./wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fscreenster.io%252Fselenium-ide-chrome%252F" />
+<link rel="alternate" type="text/xml+oembed" href="./wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fscreenster.io%252Fselenium-ide-chrome%252F&amp;format=xml" />
+
+<script data-cfasync="false">
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};
+(function(d,s,a,b){a=d.createElement(s);b=d.getElementsByTagName(s)[0];a.async=1;a.src="https://static.addtoany.com/menu/page.js";b.parentNode.insertBefore(a,b);})(document,"script");
+</script>
+<link rel="icon" href="./wp-content/uploads/2016/03/cropped-favicon-32x32.png" sizes="32x32" />
+<link rel="icon" href="./wp-content/uploads/2016/03/cropped-favicon-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="./wp-content/uploads/2016/03/cropped-favicon-180x180.png" />
+<meta name="msapplication-TileImage" content="./wp-content/uploads/2016/03/cropped-favicon-270x270.png" />
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MN2F9R8');</script>
+<!-- End Google Tag Manager -->
+</head>
+
+<body class="post-template-default single single-post postid-883 single-format-standard group-blog">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MN2F9R8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="wrapper">
+	<header id="header">
+		<div class="container clearfix">
+		<a class="logo" href="./index.html">screenster</a>		
+			<div class="nav-container">
+				<span class="mobile-opener"><i></i></span>
+				<ul id="nav" class="menu"><li id="menu-item-12" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-12"><a href="./index.html">Home</a></li>
+<li id="menu-item-313" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-313"><a href="./documentation/demo-automation-of-gmail-with-screenster/index.html">Documentation</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="./pricing/index.html">Pricing</a></li>
+<li id="menu-item-44" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-44"><a href="./support/index.html">Support</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-43"><a href="./blog/index.html">Blog</a></li>
+<li id="menu-item-1812" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1812"><a href="https://tests.screenster.io/authenticate/signin?remember=true">Login</a></li>
+<li id="menu-item-13" class="sign-link menu-item menu-item-type-custom menu-item-object-custom menu-item-13"><a href="https://tests.screenster.io/authenticate/signup">Sign up</a></li>
+</ul>			</div>
+		</div>
+
+	</header>
+
+<div id="main">	<div class="container">		<div class="blog-wrap">			
+
+
+	<aside id="secondary" class="sidebar" role="complementary">
+		<section id="enhancedtextwidget-2" class="widget widget_text enhanced-text-widget"><div class="textwidget widget-text"><section id="recent-posts-2" class="widget widget_recent_entries">
+    <h2>Related Posts</h2>
+    <ul>
+        <li>
+            <a href="./image-comparison-tool/index.html">Image and screenshot comparison tools for UI testing</a>
+            <span class="post-date">June 20, 2017</span>
+        </li>
+        <li>
+            <a href="./selenium-alternatives-for-testing-automation/index.html">Selenium alternatives for testing automation</a>
+            <span class="post-date">March 13, 2016</span>
+        </li>
+        <li>
+            <a href="index.html">How to run tests from Selenium IDE in Chrome</a>
+            <span class="post-date">March 2, 2017</span>
+        </li>
+<li>
+            <a href="./selenium-ide-alternatives-for-ui-regression-testing/index.html">Selenium IDE alternatives for UI regression testing</a>
+            <span class="post-date">February 3, 2017</span>
+        </li>
+<li>
+            <a href="./regression-testing/index.html">What is Regression Testing? Techniques and best practices
+</a>
+            <span class="post-date">May 3, 2017</span>
+        </li>
+    </ul>
+</section></div></section><div class="sticky-sidebar" style="text-align: center;"></br><span class="sidebar-cta">Want to try Screenster on the cloud?</span><a id="btn-try-online-sidebar" class="btn" href="https://tests.screenster.io/authenticate/signup?tryNow=true" target="_blank">Try Online</a></br></br></br></div>
+	</aside><!-- .sidebar .widget-area -->
+	<!--Sidebar sticky functionality-->
+	<script>
+jQuery( document ).ready(function() {
+  
+
+  var $sticky = jQuery('.sticky-sidebar');
+  var $stickyrStopper = jQuery('.sticky-stopper');
+  if (!!$sticky.offset()) { // make sure ".sticky" element exists
+
+    var generalSidebarHeight = $sticky.innerHeight();
+    var stickyTop = $sticky.offset().top;
+    var stickOffset = 100;
+    
+    
+    jQuery(window).scroll(function(){ // scroll event
+      var windowTop = jQuery(window).scrollTop(); // returns number
+var stickyStopperPosition = $stickyrStopper.offset().top;
+var stopPoint = stickyStopperPosition - generalSidebarHeight - stickOffset-78;
+var diff = stopPoint + stickOffset;
+      if (stopPoint < windowTop) {
+          $sticky.css({ position: 'absolute', top: diff });
+      } else if (stickyTop < windowTop+stickOffset) {
+          $sticky.css({ position: 'fixed', top: stickOffset });
+      } else {
+          $sticky.css({position: 'absolute', top: 'initial'});
+      }
+    });
+
+  }
+});
+</script>
+
+
+
+
+			<div class="blog-content">		
+<article id="post-883" class="post-883 post type-post status-publish format-standard has-post-thumbnail hentry category-ui-testing-automation">
+	<h1>Selenium IDE for Chrome</h1>	<span class="post-date">March 2, 2017</span>
+
+    
+	
+	<div class="post-thumbnail">
+		<img width="800" height="300" src="./wp-content/uploads/2017/01/SeleniumIDEwithChrome.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" srcset="./wp-content/uploads/2017/01/SeleniumIDEwithChrome.png 800w, ./wp-content/uploads/2017/01/SeleniumIDEwithChrome-300x113.png 300w, ./wp-content/uploads/2017/01/SeleniumIDEwithChrome-768x288.png 768w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 60vw, (max-width: 1362px) 62vw, 840px" />	</div><!-- .post-thumbnail -->
+
+	
+	<div class="content">
+		<span class="entry-content"><p>Ever wondered if you could use Selenium IDE for Chrome? You&#8217;ve probably heard that the IDE only runs in Firefox, which means Google’s much-famed browser is out of reach. Actually, there’s a neat little feature that lets you run Selenium IDE in Chrome.</p>
+<p><span id="more-883"></span></p>
+<p>The feature is called WebDriver Playback. Here&#8217;s how you can use it:</p>
+<ul>
+<li>Launch Selenium IDE.</li>
+<li>Go to ‘Options’ and select “Options&#8230;” in the drop-down menu.</li>
+<li>In the Options menu, select the “WebDriver” tab.</li>
+<li>Check the “Enable WebDriver playback” checkbox.</li>
+<li>Find the “Browser choices” input field right below the checkbox. Below the input field, you will see browser options. These include “android, chrome, firefox, htmlunit, internet explorer, iPhone, iPad”.</li>
+<li>Substitute “firefox” with “chrome”. Note that both variants are lowercase.</li>
+<li>Download the <a href="https://www.npmjs.com/package/selenium-standalone-jar" target="_blank" rel="noopener">Selenium standalone JAR</a> file and <a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">ChromeDriver</a>. Add both files to the same folder on your local computer.</li>
+<li>Use Terminal to navigate to the folder with the downloaded files.</li>
+<li>Start Selenium server and ChromeDriver server via Terminal:<br />
+<script src="https://gist.github.com/screenster/7c034226310d52de0937ddb8e013ca07.js"></script></li>
+<li>Open Selenium IDE and run the test script. Note that the script will run in one of the more or less recent versions of Chrome.</li>
+</ul>
+<p>So if you wanted to find out how to run Selenium tests in Chrome, follow the 10 steps mentioned above and enjoy the new feature:). Being able to push Selenium IDE outside of Firefox seems like a great thing, provided that its functionality is good enough for you.</p>
+<p>If you’re looking for a game changer solution though, there’s an awesome alternative.</p>
+<h2>Visual regression testing on the cloud with Screenster</h2>
+<p>Screenster is a smarter, cloud-based <a href="./selenium-ide-alternatives-for-ui-regression-testing/index.html" target="_blank" rel="noopener">alternative to using Selenium IDE</a> with Google Chrome. This new QA automation platform caters to non-developers and enables them to run visual regression test suites. Just like Selenium IDE, it uses record-playback to automate UI testing. Unlike Selenium IDE, it goes far beyond basic UI testing functionality.</p>
+<p>Below you will find a short list of the features that Screenster offers.</p>
+<h2>Record-playback with smart comparison</h2>
+<p>Similarly to Selenium IDE, Screenster records actual interactions with the UI. It also captures screenshots of every page and UI state along with its DOM structure. The platform stores this information as a Baseline for future comparison during regression testing.</p>
+<p>When comparing UI screenshots, Screenster detects visual issues of different kinds. It notices broken layouts, wrong font or colors, and other UI bugs. What’s more, the platform detects bugs of this kind with one-pixel precision.</p>
+<h2>Automatic verification of every on-page element</h2>
+<p>Screenster is one of the many alternatives to running Selenium IDE in Chrome. At the same time, it’s one of the few visual testing platforms that actually verifies the UI. </p>
+<p>When running tests, Screenster automatically verifies the DOM, visual representation, and content of every individual UI element. This approach is more advanced, and far more effective compared to what that most other tools use. </p>
+<p>Low-level solutions like Selenium make you hand-code UI verification scripts targeting separate elements. Visual platforms like Ghost Inspector simplify the process by asking you to click on an element to verify it. Screenster does this automatically. </p>
+<h2>Efficient visual testing</h2>
+<p>Most visual testing tools rely on pixel matching, with tolerance for minor mismatches set to reduce false positives. So, say, if 5% of pixels are different in the new screenshot, the test will still pass. The problem is minor bugs, like missing icons, added or removed content, or broken margin and padding, will slip under the 5% threshold.</p>
+<p>A more efficient approach is to keep the comparison pixel-perfect for each individual element. If there are no bugs on the element level, the tool will run a quick page-level comparison to check the placement of elements. That’s exactly how Screenster tests works.</p>
+<h2>Smooth learning curve</h2>
+<p>Screenster is super-friendly to non-technical people, so you don’t need to be a programmer to use it. Here are two reasons why this matters:</p>
+<ul>
+<li>Web development teams rarely have the time or budget to cover every UI element with scripted tests. With tools like Screenster, teams can perform end-to-end UI regression testing by automating the job of manual QAs. In fact, even business staff can use Screenster to participate in UI testing.</li>
+<li>Even for developers, code-based solutions like Selenium or PhantomJS have a steep learning curve. Everyone knows it’s wiser to spend the time of developers on writing features, not tests.</li>
+</ul>
+<h2>Codeless test editing</h2>
+<p><a href="./selenium-ide-firefox/index.html" target="_blank" rel="noopener">Selenium IDE</a> leaves you fumbling through generated WebDriver code whenever you try to modify a test suite. With Screenster, most of the test-editing functionality is codeless. You’ll be 10x more productive when creating tests, removing or adding new steps, or working with individual UI elements.</p>
+<h2>Support for custom Selenium and JavaScript</h2>
+<p>What if you want to use your existing Selenium tests with Screenster? Or maybe, you feel that a particular case requires a handwritten, rather than recorded test… </p>
+<p>We’ve got you covered in both cases. Selenium and JavaScript are first-class citizen in the Screenster infrastructure. If you need to, you can integrate custom-written Selenium and JS tests into your suites or expand recorded tests with code.</p>
+<h2>Automated everything</h2>
+<p>Part of the Screenster’s awesome factor is that it automates 99% of the processes that normally require tinkering. Ever had to hand-code timeouts or ponder how to build an element locator that won’t become useless after a new UI update? With Screenster, you won’t have to worry about things of this sort. The range of automated features includes:</p>
+<ul>
+<li><b>Timeouts.</b> Automatic handling of timeouts takes the pain away from working with Ajax updates. At the end of the day, this streamlines UI testing of single-page applications.</li>
+<li><b>Locators.</b> Screenster automatically builds precise, robust locators for each UI element. The platform updates these locators whenever someone changes the UI.</li>
+<li><b>Identification of dynamic regions.</b> When analyzing a new test suite for the first time, Screenster will identify regions with dynamic content. It will mark these regions and offer you to ignore them during regression testing.</li>
+</ul>
+<h2>Collaboration features</h2>
+<p>Screenster works on a shared server that runs on the cloud or on premise. The platform enables QA teams to collaborate on tests suits by accessing a shared web portal.</p>
+<h2>Minimal setup</h2>
+<p>Unlike other cloud-based platforms, the core functionality of Screenster doesn’t rely on the installation of extra software. No Chrome of Firefox extensions, plugins or add-ons. Just log into your account and begin recording.</p>
+<h2>CI support</h2>
+<p>Screenster supports major CI tools including Jenkins, Bamboo, TeamCity, and Travis via a CI plugin. The CI functionality of Screenster doesn’t require additional frameworks or components. The only thing that you’ll have to do manually is choose the CI tool in the settings menu.</p>
+<h2>Bottom Line: it’s 2017, check out alternatives to Selenium IDE</h2>
+<p>Sure, Selenium IDE is a neat Firefox extension — even more so now that you know how to use Selenium IDE in Chrome. Still, the functionality offered by this tool seems too scarce for any real-life project. Making Selenium IDE work for Chrome is one thing. Trying to use it for an enterprise-grade production team is a challenge of a whole different scale.</p>
+<p>If a simple tool for visual regression testing is what you’re looking for, cloud based platforms are a way to go. And even though Screenster isn’t the only tool of its kind, it’s definitely worth a shot.<br />
+
+<div class="sticky-stopper"></div>
+<br />
+
+<div class="bottom-cta" style="text-align: center;">
+<h2>Self-healing UI tests in Chrome</h2>
+<a id="btn-try-online" class="btn" href="https://tests.screenster.io/authenticate/signup?tryNow=true" target="_blank" rel="noopener">Try Online</a>
+
+</div>
+</p>
+</span><div class="hatom-extra"><span class="entry-title">Selenium IDE for Chrome</span> was last modified: <span class="updated"> May 21st, 2018</span> by <span class="author vcard"><span class="fn">Ilya Goncharov</span></span></div><div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="./selenium-ide-chrome/" data-a2a-title="Selenium IDE for Chrome"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fscreenster.io%2Fselenium-ide-chrome%2F&amp;linkname=Selenium%20IDE%20for%20Chrome" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fscreenster.io%2Fselenium-ide-chrome%2F&amp;linkname=Selenium%20IDE%20for%20Chrome" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fscreenster.io%2Fselenium-ide-chrome%2F&amp;linkname=Selenium%20IDE%20for%20Chrome" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_google_plus" href="https://www.addtoany.com/add_to/google_plus?linkurl=https%3A%2F%2Fscreenster.io%2Fselenium-ide-chrome%2F&amp;linkname=Selenium%20IDE%20for%20Chrome" title="Google+" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fscreenster.io%2Fselenium-ide-chrome%2F&amp;linkname=Selenium%20IDE%20for%20Chrome" title="Email" rel="nofollow noopener" target="_blank"></a></div></div>	</div><!-- .content -->
+	
+	<div id="single_post_pagination">
+		<a href="./web-regression-testing/index.html" rel="prev">&laquo; Web regression testing: why move to cloud-based platforms?</a> <a href="./the-rise-of-automation-testing-platforms/index.html" rel="next">The Rise of Automated Testing Platforms; &raquo</a>	</div>
+	
+	<footer class="footer">
+			</footer><!-- footer -->
+
+</article><!-- #post-## -->
+
+<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="index.html#respond" style="display:none;">Cancel reply</a></small></h2>			<form action="./wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='883' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p>			</form>
+			</div><!-- #respond -->
+	
+</div><!-- .comments-area -->
+			</div>		</div>	</div></div>
+<footer id="footer">
+	<div class="footer-holder">
+		<div class="container clearfix">
+							<section id="nav_menu-2" class="col-md-4 footer-box widget_nav_menu"><h3>Screenster</h3><div class="menu-screenster-menu-container"><ul id="menu-screenster-menu" class="menu"><li id="menu-item-307" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-307"><a href="./documentation/demo-automation-of-gmail-with-screenster/index.html">Documentation</a></li>
+<li id="menu-item-302" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-302"><a href="./documentation/local-installation/index.html">Local Installation</a></li>
+<li id="menu-item-2258" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2258"><a href="./documentation/demo-automation-of-gmail-with-screenster/index.html">Demo: Automation of Gmail with Screenster</a></li>
+<li id="menu-item-2259" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2259"><a href="./documentation/recording-tests/index.html">Recording Tests</a></li>
+<li id="menu-item-2260" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2260"><a href="./documentation/advanced-features/index.html">Advanced Features</a></li>
+<li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57"><a href="./pricing/index.html">Pricing</a></li>
+<li id="menu-item-56" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="./support/index.html">Support</a></li>
+<li id="menu-item-366" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-366"><a href="./blog/index.html">Blog</a></li>
+<li id="menu-item-367" class="sign-link menu-item menu-item-type-custom menu-item-object-custom menu-item-367"><a href="https://tests.screenster.io">My Tests</a></li>
+</ul></div></section>										<section id="nav_menu-3" class="col-md-4 footer-box widget_nav_menu"><h3>Community</h3><div class="menu-community-menu-container"><ul id="menu-community-menu" class="menu"><li id="menu-item-59" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-59"><a target="_blank" href="https://groups.google.com/forum/#!forum/screenster">Google Group</a></li>
+<li id="menu-item-283" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://www.facebook.com/screenster.io">Facebook</a></li>
+<li id="menu-item-284" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-284"><a href="https://twitter.com/screenster_io">Twitter</a></li>
+<li id="menu-item-285" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-285"><a href="https://www.linkedin.com/company/screenster">LinkedIn</a></li>
+<li id="menu-item-286" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-286"><a href="https://plus.google.com/u/0/b/102437454572601473183/102437454572601473183">Google+</a></li>
+<li id="menu-item-1521" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1521"><a href="https://www.youtube.com/channel/UCYAf5YzOoXZr8n7r1TEaHlw">YouTube</a></li>
+</ul></div></section>										<section id="nav_menu-4" class="col-md-4 footer-box widget_nav_menu"><h3>Company</h3><div class="menu-company-menu-container"><ul id="menu-company-menu" class="menu"><li id="menu-item-66" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-66"><a href="./about-us/index.html">About Us</a></li>
+<li id="menu-item-68" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68"><a href="./privacy-policy/index.html">Privacy Policy</a></li>
+<li id="menu-item-67" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-67"><a href="./license-agreement/index.html">License Agreement</a></li>
+<li id="menu-item-1941" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1941"><a href="./contact-us/index.html">Contact Us</a></li>
+</ul></div></section>					</div>
+	</div>
+	<div class="copyright">
+
+<div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+    <!-- Breadcrumb NavXT 6.1.0 -->
+<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to Screenster." href="./index.html" class="home"><span property="name">Screenster</span></a><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to Blog." href="./blog/index.html" class="post-root post post-post"><span property="name">Blog</span></a><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the UI Testing Automation category archives." href="./category/ui-testing-automation/index.html" class="taxonomy category"><span property="name">UI Testing Automation</span></a><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">Selenium IDE for Chrome</span><meta property="position" content="4"></span></div>
+		<div class="container">
+
+			2018 &copy; <a style="color:#fff;" target="_blank" href="./index.html">Screenster</a>, LLC. All rights reserved.
+
+		</div>
+	</div>
+</footer>
+
+	<div itemscope itemType="http://schema.org/BlogPosting">
+		<meta itemprop="inLanguage" content="en-US"/>
+		<meta itemprop="headline" content="Selenium IDE for Chrome">
+		<meta itemprop="mainEntityOfPage" content="./selenium-ide-chrome/"/>
+		<meta itemprop="datePublished" content="2017-03-02">
+		<meta itemprop="dateModified" content="2018-05-21">
+		<meta itemprop="articleBody" content="Ever wondered if you could use Selenium IDE for Chrome? You&#8217;ve probably heard that the IDE only runs in Firefox, which means Google’s much-famed browser is out of reach. Actually, there’s a neat little feature that lets you run Selenium IDE in Chrome. The feature is called WebDriver Playback. Here&#8217;s how you can use it: &hellip; Continue reading "Selenium IDE for Chrome"">
+	  <div itemprop="image" itemscope="" itemtype="https://schema.org/ImageObject"/>
+		<meta itemprop="url" content="./wp-content/uploads/2017/01/SeleniumIDEwithChrome-300x113.png">
+		<meta itemprop="width" content="300">
+		<meta itemprop="height" content="300">
+	  </div>
+	  <div itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<meta itemprop="name" content="Ilya Goncharov">
+	  </div>
+	  <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+		<meta itemprop="name" content="Screenster">
+		<meta itemprop="url" href=".">
+		<meta itemprop="description" content="Visual UI Testing Automation">
+		<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+		  <meta itemprop="image" content="">
+		  <meta itemprop="url" content="">
+		  <meta itemprop="width" content="300">
+		  <meta itemprop="height" content="300">
+		</span>
+	</div>
+    
+  <div id="wonderpluginlightbox_options" data-skinsfoldername="skins/default/"  data-jsfolder="./wp-content/plugins/wonderplugin-lightbox/engine/" data-autoslide="false" data-slideinterval="5000" data-showtimer="true" data-timerposition="bottom" data-timerheight="2" data-timercolor="#dc572e" data-timeropacity="1" data-showplaybutton="true" data-alwaysshownavarrows="false" data-bordersize="0" data-showtitleprefix="true" data-responsive="true" data-fullscreenmode="true" data-closeonoverlay="true" data-videohidecontrols="false" data-titlestyle="bottom" data-imagepercentage="100" data-enabletouchswipe="true" data-autoplay="true" data-html5player="true" data-overlaybgcolor="#000" data-overlayopacity="0.8" data-defaultvideovolume="1" data-bgcolor="#000" data-borderradius="0" data-thumbwidth="96" data-thumbheight="72" data-thumbtopmargin="12" data-thumbbottommargin="12" data-barheight="50" data-showtitle="false" data-titleprefix="%NUM / %TOTAL" data-titlebottomcss="color:#333; font-size:14px; font-family:Armata,sans-serif,Arial; overflow:hidden; text-align:left;" data-showdescription="false" data-descriptionbottomcss="color:#333; font-size:12px; font-family:Arial,Helvetica,sans-serif; overflow:hidden; text-align:left; margin:4px 0px 0px; padding: 0px;" data-titleinsidecss="color:#fff; font-size:16px; font-family:Arial,Helvetica,sans-serif; overflow:hidden; text-align:left;" data-descriptioninsidecss="color:#fff; font-size:12px; font-family:Arial,Helvetica,sans-serif; overflow:hidden; text-align:left; margin:4px 0px 0px; padding: 0px;" data-videobgcolor="#000" data-html5videoposter="" data-responsivebarheight="false" data-smallscreenheight="415" data-barheightonsmallheight="48" data-notkeepratioonsmallheight="false" data-wonderplugin-lightbox-options="f305a0a9fd" data-_wp_http_referer="/wp-admin/admin.php?page=wonderplugin_lightbox_show_options" style="display:none;"></div><div class="wonderplugin-engine"><a href="http://www.wonderplugin.com/wordpress-lightbox/" title="WordPress Image Lightbox Plugin">WordPress Image Lightbox Plugin</a></div><link rel='stylesheet' id='rainmaker_form_style-css'  href='./wp-content/plugins/icegram-rainmaker/assets/css/form.css%3Fver=0.33.css' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/screenster.io\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"Please verify that you are not a robot."}}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='./wp-content/plugins/contact-form-7/includes/js/scripts.js%3Fver=5.0.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var leadin_wordpress = {"userRole":"visitor","pageType":"post","leadinPluginVersion":"6.1.5"};
+/* ]]> */
+</script>
+<script type='text/javascript' async defer src='https://js.hs-scripts.com/4371298.js?ver=4.9.6'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='./wp-content/themes/twentysixteen/js/functions.js%3Fver=20151204'></script>
+<script type='text/javascript' src='./wp-includes/js/wp-embed.min.js%3Fver=4.9.6'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rm_pre_data = {"ajax_url":"https:\/\/screenster.io\/wp-admin\/admin-ajax.php","rm_nonce_field":"8588a73fa9"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='./wp-content/plugins/icegram-rainmaker/assets/js/main.js%3Fver=0.33'></script>
+
+</body>
+</html>
